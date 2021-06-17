@@ -28,25 +28,23 @@ function ajax(method, url, data) {
     }
 
     xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          const res = xhr.responseText
-          const JSONRes = JSON.parse(xhr.responseText)
-          switch (JSONRes.code) {
-            case 0:
-              resolve(res)
-              break
-            case -1:
-              reject(res)
-              break
-            default:
-              reject(res)
-              break
-          }
-
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        const res = xhr.responseText
+        const JSONRes = JSON.parse(xhr.responseText)
+        switch (JSONRes.code) {
+          case 0:
+            resolve(res)
+            break
+          case -1:
+            reject(res)
+            break
+          default:
+            reject(res)
+            break
         }
       }
     }
+
   })
 }
 
