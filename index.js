@@ -1,15 +1,29 @@
 let http = require('http')
 let fs = require('fs')
 let url = require('url')
+let querystring = require('querystring')
 
 http.createServer((req, res) => {
-  // console.log(req.url)
-  // console.log(url.parse(req.url, true))
-  // console.log(url.parse(req.url, true).query.username)
-  let { pathname, query } = url.parse(req.url, true)
-  console.log(pathname)
-  console.log(query)
+  let result = []
+  req.on('data', buffer => {
+    result.push(buffer)
+  })
+  req.on('end', () => {
+    // console.log(result.toString())
+    let data = Buffer.concat(result)
+    // console.log(data.toString())
+    console.log(querystring.parse(data.toString()))
+  })
 }).listen(8888)
+
+// http.createServer((req, res) => {
+//   // console.log(req.url)
+//   // console.log(url.parse(req.url, true))
+//   // console.log(url.parse(req.url, true).query.username)
+//   let { pathname, query } = url.parse(req.url, true)
+//   console.log(pathname)
+//   console.log(query)
+// }).listen(8888)
 
 // http.createServer((req, res) => {
 //   // console.log(req.url)
